@@ -1,12 +1,10 @@
 export default class BoardDimensions {
-    constructor() {
+    constructor(columns) {
         this.minX = Number.MAX_SAFE_INTEGER;
         this.maxX = Number.MIN_SAFE_INTEGER;
         this.minY = Number.MAX_SAFE_INTEGER;
         this.maxY = Number.MIN_SAFE_INTEGER;
-    }
 
-    calculate(columns) {
         columns.forEach((column) => {
             if (column.x < this.minX) {
                 this.minX = column.x
@@ -24,7 +22,5 @@ export default class BoardDimensions {
                 this.maxY = column.y;
             }
         })
-
-        return this;
     }
 }

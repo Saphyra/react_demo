@@ -1,9 +1,8 @@
-import BoardDimensions from "../structure/BoardDimensions";
-import Constants from "../structure/Constants";
+import BoardDimensions from "./BoardDimensions";
+import Constants from "../dto/Constants";
 
 export default function getWinner(columns) {
-    const boardDimensions = new BoardDimensions()
-        .calculate(columns);
+    const boardDimensions = new BoardDimensions(columns);
 
     const result = [];
 

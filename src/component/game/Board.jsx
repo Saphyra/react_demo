@@ -1,4 +1,5 @@
-import Column from "./column/Column";
+import React from 'react';
+import Column from "./board/Column";
 
 export default function Board({ columns, currentPlayer, columnModified, hasWinner }) {
     const rows = mapRows(columns);

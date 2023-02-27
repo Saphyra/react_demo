@@ -1,13 +1,13 @@
+import React from 'react';
 import { useState } from 'react';
-
-import RestartButton from '../component/game/RestartButton.jsx';
-import Constants from './structure/Constants.js';
-import CurrentPlayer from '../component/game/CurrentPlayer.jsx';
-import ColumnData from './structure/ColumnData.js';
-import Board from '../component/game/Board.jsx';
-import addColumnsToEdgeIfNecessary from './service/EdgeFillerService.js';
-import getWinner from './service/WinnerService.js';
-import Winner from '../component/game/Winner.jsx';
+import addColumnsToEdgeIfNecessary from '../service/EdgeFillerService';
+import getWinner from '../service/WinnerService';
+import Board from './game/Board';
+import ColumnData from '../dto/ColumnData';
+import Constants from '../dto/Constants';
+import CurrentPlayer from './game/CurrentPlayer';
+import RestartButton from './game/RestartButton';
+import Winner from './game/Winner';
 
 export default function Game() {
   const [currentPlayer, serCurrentPlayer] = useState(randomPlayer());

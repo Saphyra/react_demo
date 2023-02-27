@@ -1,9 +1,8 @@
-import ColumnData from "../structure/ColumnData";
-import BoardDimensions from "../structure/BoardDimensions";
+import BoardDimensions from "./BoardDimensions";
+import ColumnData from "../dto/ColumnData";
 
 export default function addColumnsToEdgeIfNecessary(columns) {
-    const boardDimensions = new BoardDimensions()
-        .calculate(columns);
+    const boardDimensions = new BoardDimensions(columns)
 
     addRowIfContains(columns, boardDimensions.minY, boardDimensions.minY - 1, boardDimensions, "minY");
     addRowIfContains(columns, boardDimensions.maxY, boardDimensions.maxY + 1, boardDimensions, "maxY");
