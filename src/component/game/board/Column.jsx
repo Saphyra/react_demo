@@ -1,7 +1,7 @@
 import React from 'react';
 import ColumnData from "../../../dto/ColumnData";
 
-const Column = ({ columnData, currentPlayer, columnModified, hasWinner }): JSX.Element => {
+const Column = ({ columnData, currentPlayer, columnModified, hasWinner }) => {
     const assign = () => {
         if (columnData.player) {
             return;
@@ -15,7 +15,21 @@ const Column = ({ columnData, currentPlayer, columnModified, hasWinner }): JSX.E
         columnModified(newColumnData);
     }
 
-    return (<div className={"board-column " + (columnData.player ? "occupied" : "empty") + " " + (columnData.winner ? "winner" : "")} onClick={assign} title={columnData.x + " / " + columnData.y}>{columnData.player || "."}</div>);
+    const getClassName = () => {
+        return [
+            "board-column",
+            columnData.player ? "occupied" : "empty",
+            columnData.winner ? "winner" : ""
+        ].join(" ");
+    }
+
+    return (
+        <div className={getClassName()}
+            onClick={assign}
+            title={columnData.x + " / " + columnData.y} >
+            {columnData.player || "."}
+        </div>
+    );
 }
 
 export default Column;

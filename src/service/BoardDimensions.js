@@ -1,4 +1,4 @@
-export default class BoardDimensions {
+const BoardDimensions = class {
     constructor(columns) {
         this.minX = Number.MAX_SAFE_INTEGER;
         this.maxX = Number.MIN_SAFE_INTEGER;
@@ -24,3 +24,5 @@ export default class BoardDimensions {
         })
     }
 }
+
+export default BoardDimensions;

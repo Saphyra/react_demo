@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import addColumnsToEdgeIfNecessary from '../service/EdgeFillerService';
 import getWinner from '../service/WinnerService';
@@ -9,40 +9,31 @@ import CurrentPlayer from './game/CurrentPlayer';
 import RestartButton from './game/RestartButton';
 import Winner from './game/Winner';
 
-export default function Game() {
-  const [currentPlayer, serCurrentPlayer] = useState(randomPlayer());
-  const [columns, setColumns] = useState(defaultBoard());
+const Game = () => {
+  const [currentPlayer, serCurrentPlayer] = useState(null);
+  const [columns, setColumns] = useState([]);
   const [hasWinner, setWinner] = useState(false);
 
-  return (
-    (
-      <div>
-        <RestartButton resetGame={resetGame} />
-        <CurrentPlayer player={currentPlayer} />
-        <Board columns={columns} currentPlayer={currentPlayer} columnModified={columnModified} hasWinner={hasWinner} />
-        {
-          hasWinner && <Winner player={currentPlayer} />
-        }
-      </div>
-    )
-  );
+  useEffect(() => {setColumns(defaultBoard())}, []);
+  useEffect(() => {serCurrentPlayer(randomPlayer())}, []);
 
-  function randomPlayer() {
+  const randomPlayer = () => {
     return Math.random() > 0.5 ? Constants.PLAYER_X : Constants.PLAYER_O;
   }
 
-  function resetGame() {
+  const defaultBoard = () => {
+    return [new ColumnData(0, 0, null)];
+  }
+
+  const resetGame = () => {
     serCurrentPlayer(randomPlayer());
     setColumns(defaultBoard());
     setWinner(false);
   }
 
-  function defaultBoard() {
-    return [new ColumnData(0, 0, null)];
-  }
-
-  function columnModified(newColumns) {
+  const columnModified = (newColumns) => {
     const winnerResult = getWinner(newColumns);
+
     if (winnerResult.length >= 5) {
       setWinner(true);
       winnerResult.forEach((columnData) => columnData.winner = true);
@@ -52,10 +43,28 @@ export default function Game() {
 
       setColumns(filledColumns);
       serCurrentPlayer(getAnotherPlayer(currentPlayer));
-
-      function getAnotherPlayer(currentPlayer) {
-        return currentPlayer == Constants.PLAYER_X ? Constants.PLAYER_O : Constants.PLAYER_X;
-      }
     }
   }
+
+  const getAnotherPlayer = (currentPlayer) => {
+    return currentPlayer === Constants.PLAYER_X ? Constants.PLAYER_O : Constants.PLAYER_X;
+  }
+
+  return (
+    (
+      <div>
+        <RestartButton resetGame={resetGame} />
+        <CurrentPlayer player={currentPlayer} />
+        <Board
+          columns={columns}
+          currentPlayer={currentPlayer}
+          columnModified={columnModified}
+          hasWinner={hasWinner}
+        />
+        {hasWinner && <Winner player={currentPlayer} />}
+      </div>
+    )
+  );
 }
+
+export default Game;
